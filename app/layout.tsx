@@ -14,8 +14,21 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const beaconToken = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
   return (
     <html lang="en">
+      <head>
+        {beaconToken ? (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.CLOUDFLARE_BEACON_TOKEN=${JSON.stringify(
+                beaconToken,
+              )};`,
+            }}
+          />
+        ) : null}
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
